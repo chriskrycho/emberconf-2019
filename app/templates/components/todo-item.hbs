@@ -3,15 +3,15 @@
     class="toggle"
     type="checkbox"
     checked={{todo.completed}}
-    onchange={{action "toggleCompleted"}}
+    onchange={{action this.toggleCompleted}}
   >
-  <label ondblclick={{action "startEditing"}}>{{todo.title}}</label>
-  <button class="destroy" onclick={{action "removeTodo"}}></button>
+  <label ondblclick={{action this.startEditing}}>{{todo.title}}</label>
+  <button class="destroy" onclick={{action this.removeTodo}}></button>
 </div>
 <input
   class="edit"
   value={{todo.title}}
-  onblur={{action "doneEditing" value="target.value"}}
-  onkeydown={{action "handleKeydown"}}
+  onblur={{action this.doneEditing value="target.value"}}
+  onkeydown={{action this.handleKeydown}}
   autofocus
 >

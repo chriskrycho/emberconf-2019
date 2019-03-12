@@ -3,7 +3,7 @@
     <h1>todos</h1>
     <input
       class="new-todo"
-      onkeydown={{action "createTodo"}}
+      onkeydown={{action this.createTodo}}
       placeholder="What needs to be done?"
       autofocus
     >
@@ -11,14 +11,14 @@
   {{outlet}}
   {{#if (gt model.length 0)}}
     <footer class="footer">
-      <span class="todo-count"><strong>{{remaining.length}}</strong> {{pluralize "item" remaining.length}} left</span>
+      <span class="todo-count"><strong>{{this.remaining.length}}</strong> {{pluralize "item" this.remaining.length}} left</span>
       <ul class="filters">
         <li>{{#link-to "index" activeClass="selected"}}All{{/link-to}}</li>
         <li>{{#link-to "active" activeClass="selected"}}Active{{/link-to}}</li>
         <li>{{#link-to "completed" activeClass="selected"}}Completed{{/link-to}}</li>
       </ul>
-      {{#if completed.length}}
-        <button class="clear-completed" onclick={{action "clearCompleted"}}>Clear completed</button>
+      {{#if this.completed.length}}
+        <button class="clear-completed" onclick={{action this.clearCompleted}}>Clear completed</button>
       {{/if}}
     </footer>
   {{/if}}
