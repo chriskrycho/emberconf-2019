@@ -1,0 +1,1 @@
+export default {"id":"rHDtpcRF","block":"{\"symbols\":[\"&default\"],\"statements\":[[15,1,null],[0,\"\\n\"]],\"hasEval\":false}","meta":{"specifier":"template:/-application/component/blueprints/glimmer-component/module-unification-files/__root__/__path__"}};

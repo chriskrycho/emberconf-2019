@@ -1,0 +1,1 @@
+export default {"id":"Cke8PezH","block":"{\"symbols\":[\"&default\"],\"statements\":[[15,1,null],[0,\"\\n\"]],\"hasEval\":false}","meta":{"specifier":"template:/-application/component/blueprints/glimmer-component/files/__root__/__templatepath__/__templatename__"}};

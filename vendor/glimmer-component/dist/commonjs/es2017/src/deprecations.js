@@ -1,0 +1,12 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.setPropertyDidChange = setPropertyDidChange;
+// This function has been moved to the @glimmer/tracking package. Catch uses of
+// the old API and ensure users get a nice error message.
+function setPropertyDidChange() {
+    throw new Error(`The setPropertyDidChange function has moved to the @glimmer/tracking package. Please update your import to:\n\timport { setPropertyDidChange } from '@glimmer/tracking'`);
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL3BhY2thZ2VzL0BnbGltbWVyL2NvbXBvbmVudC9zcmMvZGVwcmVjYXRpb25zLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7O1FBRWdCLG9CLEdBQUEsb0I7O0FBRGhCO0FBQ00sU0FBVSxvQkFBVixHQUE4QjtBQUNsQyxVQUFNLElBQUksS0FBSixDQUNKLHlLQURJLENBQU47QUFHRCIsInNvdXJjZXNDb250ZW50IjpbIi8vIFRoaXMgZnVuY3Rpb24gaGFzIGJlZW4gbW92ZWQgdG8gdGhlIEBnbGltbWVyL3RyYWNraW5nIHBhY2thZ2UuIENhdGNoIHVzZXMgb2Zcbi8vIHRoZSBvbGQgQVBJIGFuZCBlbnN1cmUgdXNlcnMgZ2V0IGEgbmljZSBlcnJvciBtZXNzYWdlLlxuZXhwb3J0IGZ1bmN0aW9uIHNldFByb3BlcnR5RGlkQ2hhbmdlKCkge1xuICB0aHJvdyBuZXcgRXJyb3IoXG4gICAgYFRoZSBzZXRQcm9wZXJ0eURpZENoYW5nZSBmdW5jdGlvbiBoYXMgbW92ZWQgdG8gdGhlIEBnbGltbWVyL3RyYWNraW5nIHBhY2thZ2UuIFBsZWFzZSB1cGRhdGUgeW91ciBpbXBvcnQgdG86XFxuXFx0aW1wb3J0IHsgc2V0UHJvcGVydHlEaWRDaGFuZ2UgfSBmcm9tICdAZ2xpbW1lci90cmFja2luZydgXG4gICk7XG59XG4iXSwic291cmNlUm9vdCI6IiJ9
