@@ -1,42 +1,41 @@
-import Component from "@ember/component";
 import { assert } from "@ember/debug";
-import { set } from "@ember/object";
-import { tagName, classNames } from "@ember-decorators/component";
-import { action, computed } from "@ember-decorators/object";
+import { action } from "@ember-decorators/object";
 import { inject } from "@ember-decorators/service";
+import Component from "@glimmer/component";
+import { Owner } from "@glimmer/di";
+import { tracked } from "@glimmer/tracking";
 
 import Repo, { Todo } from "todomvc/services/repo";
 
-@tagName("section")
-@classNames("main")
-export default class TodoList extends Component {
-  todos!: Todo[];
+type Args = {
+  todos: Todo[];
+};
 
+export default class TodoList extends Component<Args> {
   @inject repo!: Repo;
 
-  canToggle = true;
+  @tracked canToggle = true;
 
-  @computed("todos.@each.completed")
   get allCompleted(): boolean {
-    return this.todos.isEvery("completed");
+    return this.args.todos.isEvery("completed");
   }
 
-  init() {
-    super.init();
-    assert("`todos` is required", Array.isArray(this.todos));
+  constructor(owner: Owner, args: Args) {
+    super(owner, args);
+    assert("`todos` is required", Array.isArray(args.todos));
   }
 
   @action enableToggle() {
-    this.set("canToggle", true);
+    this.canToggle = true;
   }
 
   @action disableToggle() {
-    this.set("canToggle", false);
+    this.canToggle = false;
   }
 
   @action toggleAll() {
     let allCompleted = this.allCompleted;
-    this.todos.forEach(todo => set(todo, "completed", !allCompleted));
+    this.args.todos.forEach(todo => (todo.completed = !allCompleted));
     this.repo.persist();
   }
 }
