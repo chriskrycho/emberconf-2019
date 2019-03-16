@@ -1,10 +1,22 @@
 import Service from "@ember/service";
+import { tracked } from "@glimmer/tracking";
 
-export type Todo = {
+export class Todo {
   id: number;
-  title: string;
-  completed: boolean;
-};
+  @tracked title: string;
+  @tracked completed: boolean;
+
+  constructor(title: string, id: number, completed = false) {
+    this.title = title;
+    this.completed = completed;
+    this.id = id;
+  }
+
+  toJSON(_key: string) {
+    const { id, title, completed } = this;
+    return { id, title, completed };
+  }
+}
 
 export default class Repo extends Service {
   lastId = 0;
@@ -19,7 +31,7 @@ export default class Repo extends Service {
   }
 
   add({ title, completed }: Pick<Todo, "title" | "completed">) {
-    let todo = { title, completed, id: this.lastId++ };
+    let todo = new Todo(title, this.lastId++, completed);
     this.data = [...this.data, todo];
     this.persist();
     return todo;
