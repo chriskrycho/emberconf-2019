@@ -1,35 +1,47 @@
-import { set } from "@ember/object";
-import { isBlank } from "@ember/utils";
-import { scheduleOnce } from "@ember/runloop";
-import Component from "@ember/component";
-import { action } from "@ember-decorators/object";
-import { alias } from "@ember-decorators/object/computed";
 import { assert } from "@ember/debug";
-import { className, tagName } from "@ember-decorators/component";
+import { action } from "@ember-decorators/object";
+import { guidFor } from "@ember/object/internals";
+import { scheduleOnce } from "@ember/runloop";
+import { isBlank } from "@ember/utils";
 import { inject } from "@ember-decorators/service";
+import { Owner } from "@glimmer/di";
+import Component from "@glimmer/component";
+import { tracked } from "@glimmer/tracking";
 
 import Repo, { Todo } from "todomvc/services/repo";
 
-@tagName("li")
-export default class TodoItem extends Component {
-  todo!: Todo;
-  onStartEdit!: () => void;
-  onEndEdit!: () => void;
+interface Args {
+  todo: Todo;
+  onStartEdit: () => void;
+  onEndEdit: () => void;
+}
 
+export default class TodoItem extends Component<Args> {
+  id: string;
   @inject repo!: Repo;
 
-  @className @alias("todo.completed") completed!: boolean;
-  @className editing = false;
+  @tracked editing = false;
 
-  init() {
-    super.init();
-    assert("`todo` is required", typeof this.todo === "object");
-    assert("`onStartEdit` is required", typeof this.onStartEdit === "function");
+  get classNames(): string {
+    const editing = this.editing ? "editing" : "";
+    const completed = this.args.todo.completed ? "completed" : "";
+    return [editing, completed].join(" ");
+  }
+
+  constructor(owner: Owner, args: Args) {
+    super(owner, args);
+    assert("`todo` is required", typeof this.args.todo === "object");
+    assert(
+      "`onStartEdit` is required",
+      typeof this.args.onStartEdit === "function"
+    );
+
+    this.id = guidFor(this);
   }
 
   @action startEditing() {
-    this.onStartEdit();
-    this.set("editing", true);
+    this.args.onStartEdit();
+    this.editing = true;
     scheduleOnce("afterRender", this, "focusInput");
   }
 
@@ -37,12 +49,14 @@ export default class TodoItem extends Component {
     if (!this.editing) {
       return;
     }
+
     if (isBlank(todoTitle)) {
-      this.send("removeTodo");
+      this.removeTodo();
     } else {
-      set(this.todo, "title", todoTitle.trim());
-      this.set("editing", false);
-      this.onEndEdit();
+      // NOTE: not DDAU!
+      this.args.todo.title = todoTitle.trim();
+      this.editing = false;
+      this.args.onEndEdit();
     }
   }
 
@@ -54,23 +68,26 @@ export default class TodoItem extends Component {
       );
       (e.target as HTMLInputElement).blur();
     } else if (e.keyCode === 27) {
-      this.set("editing", false);
+      this.editing = false;
     }
   }
 
   @action toggleCompleted(e: KeyboardEvent) {
     assert("`e.target` is set correctly", e.target instanceof HTMLInputElement);
-    set(this.todo, "completed", (e.target as HTMLInputElement).checked);
+    const target = e.target as HTMLInputElement;
+
+    this.args.todo.completed = target.checked;
     this.repo.persist();
   }
 
   @action removeTodo() {
-    this.repo.delete(this.todo);
+    this.repo.delete(this.args.todo);
   }
 
   focusInput() {
-    const edit = this.element.querySelector("input.edit");
-    assert("input `input.edit` is defined", edit instanceof HTMLInputElement);
+    // Assert because if the ID is not present the template is badly formed.
+    const edit = document.querySelector(this.id)!.querySelector("input.edit");
+    assert("`input.edit` is an input", edit instanceof HTMLInputElement);
     (edit as HTMLInputElement).focus();
   }
 }

@@ -1,17 +1,19 @@
-<div class="view">
+<li id={{this.id}} class={{this.classNames}}>
+  <div class="view">
+    <input
+      class="toggle"
+      type="checkbox"
+      checked={{@todo.completed}}
+      onchange={{action this.toggleCompleted}}
+    >
+    <label ondblclick={{action this.startEditing}}>{{@todo.title}}</label>
+    <button class="destroy" onclick={{action this.removeTodo}}></button>
+  </div>
   <input
-    class="toggle"
-    type="checkbox"
-    checked={{todo.completed}}
-    onchange={{action this.toggleCompleted}}
+    class="edit"
+    value={{@todo.title}}
+    onblur={{action this.doneEditing value="target.value"}}
+    onkeydown={{action this.handleKeydown}}
+    autofocus
   >
-  <label ondblclick={{action this.startEditing}}>{{todo.title}}</label>
-  <button class="destroy" onclick={{action this.removeTodo}}></button>
-</div>
-<input
-  class="edit"
-  value={{todo.title}}
-  onblur={{action this.doneEditing value="target.value"}}
-  onkeydown={{action this.handleKeydown}}
-  autofocus
->
+</li>
