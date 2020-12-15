@@ -1,6 +1,6 @@
-<center><h1>:red-square: Archived, and somewhat dated, but still useful! :red-square:</h1></center>
+<h1 align="center">:red_square: Archived, and somewhat dated, but still useful! :red_square:</h1>
 
-<center><p><em>This repo does not fully represent my current best thinking on structuring an Ember Octane app with TypeScript, but it may still be useful to you for reference! It is archived and will not see further changes (including dependency fixes), but I leave it up in case it is useful to anyone!</em></p></center>
+<p align="center"><em>This repo does not fully represent my current best thinking on structuring an Ember Octane app with TypeScript, but it may still be useful to you for reference! It is archived and will not see further changes (including dependency fixes), but I leave it up in case it is useful to anyone!</em></p>
 
 # TODO MVC… with TypeScript and Ember Octane!
 
